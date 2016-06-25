@@ -78,7 +78,7 @@
 			<batch:chunk reader="storeKeywordItemReader" writer="customKeywordItemWriter" commit-interval="${commit.interval}" skip-limit="${cron.job.static.map.skip.limit}" processor-transactional="false">
     			<!--  Skipping is safe  -->
     			<batch:skippable-exception-classes>
-      				<batch:include class="com.clout.cron.batch.task.TaskException" />
+      				<batch:include class="com.api.cron.batch.task.TaskException" />
     			</batch:skippable-exception-classes>			
     		</batch:chunk>
 
@@ -99,8 +99,8 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
-				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, _country_code" />
-				<property name="fromClause" value="from stores" />
+				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -114,7 +114,7 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StoreMapper" />
 		</property>
 	</bean>
 	
@@ -127,8 +127,8 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
-				<property name="selectClause" value="select id, name, address_line_1, address_line_2, city, state, zipcode, _country_code" />
-				<property name="fromClause" value="from stores" />
+				<property name="selectClause" value="select id, name, address_line_1, address_line_2, city, state, zipcode, country_code" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -142,7 +142,7 @@
 		</property>		
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.crawler.sitemap.SitemapMapper" />
+			<bean class="com.api.cron.batch.crawler.sitemap.SitemapMapper" />
 		</property>
 	</bean>
 		
@@ -162,7 +162,7 @@
                 class="org.springframework.oxm.xstream.XStreamMarshaller"  scope="step">
 		<property name="aliases">
 			<util:map id="aliases">
-				<entry key="sitemap" value="com.clout.cron.batch.crawler.sitemap.SitemapFile" />
+				<entry key="sitemap" value="com.api.cron.batch.crawler.sitemap.SitemapFile" />
 			</util:map>
 		</property>
 	</bean>		
@@ -195,7 +195,7 @@
                 class="org.springframework.oxm.xstream.XStreamMarshaller" scope="step">
 		<property name="aliases">
 			<util:map id="aliases">
-				<entry key="url" value="com.clout.cron.batch.crawler.sitemap.SitemapXml" />
+				<entry key="url" value="com.api.cron.batch.crawler.sitemap.SitemapXml" />
 			</util:map>
 		</property>
 	</bean>	
@@ -209,7 +209,7 @@
 	<property name="sql">
 	  <value>
             <![CDATA[       
-            	UPDATE stores SET `key_words` = :keyWords, `public_store_key` = :publicStoreKey WHERE `id` = :storeId; 
+            	UPDATE business_data SET `key_words` = :keyWords, `public_store_key` = :publicStoreKey WHERE `id` = :storeId; 
             ]]>
 	  </value>
 	</property>

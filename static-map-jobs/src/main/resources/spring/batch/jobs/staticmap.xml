@@ -19,12 +19,13 @@
 		<property name="location" value="file:/opt/static-maps/googleapi.properties" />
 	</bean>		
 	
-	
+
+
 	<batch:job id="staticMapJob">	
 		<!-- Decision tasklet to decide what store index to start at -->
 	    <batch:step id="partitionStep" next="recordJobStep">
 			<batch:partition step="storeMapStep" partitioner="rangePartitioner">
-				<batch:handler grid-size="${static.map.gridsize}" task-executor="taskExecutor" />
+				<batch:handler grid-size="${grid.size}" task-executor="taskExecutor" />
 			</batch:partition>
 	    </batch:step>
 	    <batch:step id="recordJobStep">
@@ -36,7 +37,7 @@
 
 	<batch:step id="storeMapStep">
 		<batch:tasklet >
-			<batch:chunk reader="customStaticMapItemReader" processor="staticMapItemProcessor" writer="staticMapWriter" commit-interval="1" processor-transactional="false" skip-limit="${cron.job.static.map.skip.limit}"> <!--   retry-limit="3"> -->
+			<batch:chunk reader="customStaticMapItemReader" processor="staticMapItemProcessor" writer="staticMapWriter" commit-interval="${commit.interval}" processor-transactional="false" skip-limit="${cron.job.static.map.skip.limit}"> <!--   retry-limit="3"> -->
     			
     			<!-- <batch:retryable-exception-classes>
       				<batch:include class="java.net.SocketException" />
@@ -45,8 +46,8 @@
     			<!--  Skipping is safe  -->
     			
     			<batch:skippable-exception-classes>
-      				<batch:include class="com.clout.cron.batch.task.TaskException" />
-      				<batch:include class="com.clout.cron.batch.SkippableException" />
+      				<batch:include class="com.api.cron.batch.task.TaskException" />
+      				<batch:include class="com.api.cron.batch.SkippableException" />
     			</batch:skippable-exception-classes>
     		</batch:chunk>
     		
@@ -71,7 +72,7 @@
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
 				<property name="selectClause" value="select id, longitude, latitude" />
-				<property name="fromClause" value="from stores" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -85,12 +86,12 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StaticMapStoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StaticMapStoreMapper" />
 		</property>
 	</bean>
 
 
-	<bean id="s3Info" class="com.clout.cron.batch.metadata.S3Info">
+	<bean id="s3Info" class="com.api.cron.batch.metadata.S3Info">
 		<property name="bucketName" value="${s3.bucket.name}" />
 		<property name="s3Host" value="${s3.host}"/>
 	</bean>
@@ -104,8 +105,8 @@
 	</bean>		
 		
 	<bean id="amazonCredentials" class="com.amazonaws.auth.BasicAWSCredentials">
-		<constructor-arg index="0" value="AKIAI3UTLM74PPVHJ6WQ" />
-		<constructor-arg index="1" value="yDxSzsa2esaBQOQQd+tNIHX7yvcf4vGeBKg8MO35" />
+		<constructor-arg index="0" value="" /><!-- AKIAI3UTLM74PPVHJ6WQ" /> -->
+		<constructor-arg index="1" value="" /><!-- yDxSzsa2esaBQOQQd+tNIHX7yvcf4vGeBKg8MO35" /> -->
 	</bean>
 	
 	<bean id="s3Client" class="com.amazonaws.services.s3.AmazonS3Client">
@@ -117,27 +118,27 @@
 		<constructor-arg index="0" ref="s3Client"/>
 	</bean>
 	
-	<bean id="googleServiceFactory" class="com.clout.cron.batch.task.GoogleServiceFactory">
+	<bean id="googleServiceFactory" class="com.api.cron.batch.task.GoogleServiceFactory">
 		<constructor-arg>  
 			<map>  
 				<entry key="S3ResourceExistTask" >
-					<bean class="com.clout.cron.batch.task.S3ResourceExistTask" >
+					<bean class="com.api.cron.batch.task.S3ResourceExistTask" >
 						<property name="s3Client" ref="s3Client"/>
 					</bean>
 				</entry>
 				<entry key="GoogleDownloadTask" >
-					<bean class="com.clout.cron.batch.task.GoogleDownloadTask" ></bean>
+					<bean class="com.api.cron.batch.task.GoogleDownloadTask" ></bean>
 				</entry>				
 				<entry key="S3UploadTask" >
-					<bean class="com.clout.cron.batch.task.S3UploadTask" >
+					<bean class="com.api.cron.batch.task.S3UploadTask" >
 						<property name="transferManager" ref="transferManager"/>
 					</bean>
 				</entry>
 				<entry key="GoogleGeocodeTask" >
-					<bean id="googleGeocodeTask" class="com.clout.cron.batch.task.GoogleGeocodeTask" />
+					<bean id="googleGeocodeTask" class="com.api.cron.batch.task.GoogleGeocodeTask" />
 				</entry>
 				<entry key="GooglePlacesTask" >
-					<bean id="googlePlacesTask" class="com.clout.cron.batch.task.GooglePlacesTask" />
+					<bean id="googlePlacesTask" class="com.api.cron.batch.task.GooglePlacesTask" />
 				</entry>				
 			</map>			
 		</constructor-arg> 		

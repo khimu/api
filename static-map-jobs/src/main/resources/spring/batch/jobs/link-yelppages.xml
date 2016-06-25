@@ -32,7 +32,8 @@
 		<batch:tasklet transaction-manager="transactionManager">
 			<batch:chunk reader="yelp2ItemReader"  writer="yelp2ItemWriter" processor-transactional="false" commit-interval="${commit.interval}" skip-limit="${cron.job.business.data.skip.limit}">
     			<batch:skippable-exception-classes>
-      				<batch:include class="com.clout.cron.batch.task.TaskException" />
+      				<batch:include class="com.api.cron.batch.task.TaskException" />
+      				<batch:include class="org.springframework.dao.DuplicateKeyException" />
     			</batch:skippable-exception-classes>
     		</batch:chunk>
 
@@ -69,7 +70,7 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.LinkMapper" />
+			<bean class="com.api.cron.batch.mapper.LinkMapper" />
 		</property>
 	</bean>
 	
@@ -80,8 +81,8 @@
 	<property name="sql">
 	  <value>
             <![CDATA[   
-            INSERT INTO yelp_data (id, phone_number, longitude, latitude, website, name, address_line_1, address_line_2, city, state, zipcode, _country_code, key_words, public_store_key, clout_id, start_date, _entered_by, last_updated, _last_updated_by, is_franchise, price_range, star_rating, _primary_contact_id, online_only, status, has_multiple_locations, _state_id, email_address,_store_owner_id, logo_url, slogan, small_cover_image, large_cover_image, description, date_entered, full_address, category) 
-            VALUES (:storeId, :phoneNumber, :longitude, :latitude, :website, :name, :addressLine1, :addressLine2, :city, :state, :zipcode, 'USA', :keyWords, :publicStoreKey, 0, now(), 1, now(), 1, 'N', 0, 0, 1, 'N', 'active', 'N', 5, '', 0, '', '', '', '', '', now(), :fullAddress, :category);
+            INSERT INTO yelp_data (id, phone, longitude, latitude, website, name, address_line_1, address_line_2, city, state, zipcode, country_code, key_words, public_store_key, email, full_address, category) 
+            VALUES (:storeId, :phoneNumber, :longitude, :latitude, :website, :name, :addressLine1, :addressLine2, :city, :state, :zipcode, 'USA', :keyWords, :publicStoreKey, :emailAddress, :fullAddress, :category);
             ]]>
 	  </value>
 	</property>

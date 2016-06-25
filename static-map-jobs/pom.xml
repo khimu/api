@@ -4,17 +4,18 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.1.RELEASE</version>
+		<version>1.2.7.RELEASE</version>
 	</parent>
 
 
-	<groupId>com.clout</groupId>
-	<artifactId>clout-dataprocessing</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.api</groupId>
+	<artifactId>api-scrapper</artifactId>
+	<version>0.0.1</version>
 
 	<properties>
 		<!-- Add environment specific properties here -->
 		<java.version>1.8</java.version>
+		<spring.version>4.2.2.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -80,14 +81,6 @@
 			<version>2.6</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.7.3</version>
@@ -113,12 +106,53 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.3</version>
 		</dependency>
+		<!-- Log4j2 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
+					<artifactId>log4j-slf4j-impl</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
+		<!-- Log implementation binding -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-jdk14</artifactId>
+		</dependency>
+				
+<!-- 
+	   <dependency>
+	       <groupId>org.slf4j</groupId>
+	       <artifactId>slf4j-log4j12</artifactId>
+	       <exclusions>
+	       	<exclusion>
+	       		<groupId>log4j</groupId>
+	       		<artifactId>log4j</artifactId>	       	
+	       	</exclusion>
+	       </exclusions>
+	   </dependency>	
+	    -->	
 	</dependencies>
 
 
 	<build>
-		<finalName>data-processing-cron-executable</finalName>
+		<finalName>api-scrapper-executable</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

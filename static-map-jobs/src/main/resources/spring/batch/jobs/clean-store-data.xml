@@ -32,7 +32,7 @@
 		<batch:tasklet transaction-manager="transactionManager">
 			<batch:chunk reader="storeItemReader" processor="cleanStoreItemProcessor" writer="cleanStoreItemWriter" commit-interval="${commit.interval}" skip-limit="${cron.job.business.data.skip.limit}" processor-transactional="false">
     			<batch:skippable-exception-classes>
-      				<batch:include class="com.clout.cron.batch.task.TaskException" />
+      				<batch:include class="com.api.cron.batch.task.TaskException" />
     			</batch:skippable-exception-classes>
     		</batch:chunk>
 
@@ -52,8 +52,8 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
-				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, _country_code, website, phone_number" />
-				<property name="fromClause" value="from stores" />
+				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, website, phone, email, category" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId and longitude is null or latitude is null" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -67,7 +67,7 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StoreMapper" />
 		</property>
 	</bean>
 
@@ -78,7 +78,7 @@
 	<property name="sql">
 	  <value>
             <![CDATA[       
-            	UPDATE stores SET `longitude` = :longitude, `latitude` = :latitude WHERE `id` = :storeId; 
+            	UPDATE business_data SET `longitude` = :longitude, `latitude` = :latitude WHERE `id` = :storeId; 
             ]]>
 	  </value>
 	</property>
@@ -90,11 +90,11 @@
   </bean>
 
   
-	<bean id="googleServiceFactory" class="com.clout.cron.batch.task.GoogleServiceFactory">
+	<bean id="googleServiceFactory" class="com.api.cron.batch.task.GoogleServiceFactory">
 		<constructor-arg>  
 			<map>  
 				<entry key="GoogleGeocodeTask" >
-					<bean id="googleGeocodeTask" class="com.clout.cron.batch.task.GoogleGeocodeTask" />
+					<bean id="googleGeocodeTask" class="com.api.cron.batch.task.GoogleGeocodeTask" />
 				</entry>			
 			</map>			
 		</constructor-arg> 		

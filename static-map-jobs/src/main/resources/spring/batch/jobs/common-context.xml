@@ -14,18 +14,12 @@
 		http://www.springframework.org/schema/jdbc 
 		http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd">
 
-	<context:component-scan base-package="com.clout.cron.batch"/>
+	<context:component-scan base-package="com.api.cron.batch"/>
 	
-	<util:list id="naicsCategory" value-type="com.clout.cron.batch.model.Naics">
-	</util:list>
-	
-	<util:map id="categoryLevel2Mapping" map-class="java.util.HashMap">
-    </util:map>
- 
- 	<util:map id="categoryLevel2ToNaicsMapping" map-class="java.util.HashMap">
-    </util:map>  
+	<util:list id="naicsCategory" value-type="com.api.cron.batch.model.Naics"></util:list>
+	<util:map id="categoryLevel2Mapping" map-class="java.util.HashMap"></util:map>
+ 	<util:map id="categoryLevel2ToNaicsMapping" map-class="java.util.HashMap"></util:map>  
     	
-	
 	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>
 
 	<!-- stored job-meta in database -->
@@ -34,10 +28,8 @@
 		<property name="jobRepository" ref="jobRepository" />
 	</bean>
 
- 
 	<bean id="resourcelessTransactionManager"
 		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-
 
 	<bean id="jobRepository"
       class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
