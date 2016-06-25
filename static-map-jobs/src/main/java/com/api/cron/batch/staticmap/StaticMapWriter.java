@@ -58,13 +58,16 @@ public class StaticMapWriter implements ItemWriter<BaseItem> {
 				/*
 				 * check if resource exist
 				 */
-				googleServiceFactory.getTask(S3ResourceExistTask.class.getSimpleName()).execute(s3Info, imageMetadata);
+				// TODO disable this until s3 credential is created and can be set in the xml configuration
+				// googleServiceFactory.getTask(S3ResourceExistTask.class.getSimpleName()).execute(s3Info, imageMetadata);
 				
 	
 				/*
 				 * image does not exist in s3
 				 */
-				if(imageMetadata.isExist() == false) {
+				// TODO disable this until s3 credential is created and can be set in the xml configuration
+				// if(imageMetadata.isExist() == false) {
+				if(true) {
 					logger.debug("Image does not exist");
 					/*
 					 * Download image from google service
@@ -73,7 +76,9 @@ public class StaticMapWriter implements ItemWriter<BaseItem> {
 					/*
 					 * upload the image
 					 */
-					googleServiceFactory.getTask(S3UploadTask.class.getSimpleName()).execute(s3Info, imageMetadata);
+					// TODO disable this until s3 credential is created and can be set in the xml configuration
+					//googleServiceFactory.getTask(S3UploadTask.class.getSimpleName()).execute(s3Info, imageMetadata);
+					logger.info("Image Name: " + imageMetadata.getImageName());
 					jobState.incrementSuccess();
 					logger.debug("Total success " + jobState.getSuccess());					
 				}

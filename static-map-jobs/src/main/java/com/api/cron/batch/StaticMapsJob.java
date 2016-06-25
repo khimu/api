@@ -106,9 +106,7 @@ public class StaticMapsJob implements BatchJob {
 					        ps.setInt(4, 0);
 					        ps.setInt(5, 0);
 					        ps.setInt(6, 0);
-					        ps.setString(7, "Y");
-					        ps.setTimestamp(8, new Timestamp(System.currentTimeMillis()));
-					        ps.setString(9, "");
+					        ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 					              
 					        return (Boolean) ps.execute();    
 					    };

@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS job_state (
   already_exist int(20) DEFAULT NULL,
   success int(20) DEFAULT NULL,
   failed int(20) DEFAULT NULL,
-  last_processed_date int(20) DEFAULT NULL,
+  last_processed_date TIMESTAMP DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS business_data (
   state VARCHAR(100) DEFAULT NULL,
   address_line_1 VARCHAR(100) DEFAULT NULL,
   address_line_2 VARCHAR(100) DEFAULT NULL,
-  zipcode varchar(20) DEFAULT NULL,
+  zipcode VARCHAR(20) DEFAULT NULL,
   country_code VARCHAR(100) DEFAULT NULL,
   website VARCHAR(200) DEFAULT NULL,
   phone VARCHAR(50) DEFAULT NULL,
@@ -46,10 +46,9 @@ CREATE TABLE IF NOT EXISTS business_data (
   key_words text DEFAULT NULL,
   public_store_key text DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT unique_idx1 UNIQUE (name, address_line_1),
-  CONSTRAINT unique_idx2 UNIQUE (name, address_line_1, city, state. zipcode),  
+  CONSTRAINT unique_idx1 UNIQUE (name, address_line_1, city, state, zipcode),  
   PRIMARY KEY (id)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 
 
@@ -72,8 +71,7 @@ CREATE TABLE IF NOT EXISTS yellowpages_data (
   key_words text DEFAULT NULL,
   public_store_key text DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT unique_idx1 UNIQUE (name, address_line_1),
-  CONSTRAINT unique_idx2 UNIQUE (name, address_line_1,city, state. zipcode),  
+  CONSTRAINT unique_idx1 UNIQUE (name, address_line_1,city, state, zipcode),  
   PRIMARY KEY (id)
 ) ENGINE=InnoDB
 
@@ -99,9 +97,9 @@ CREATE TABLE IF NOT EXISTS yelp_data (
   public_store_key text DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT unique_idx1 UNIQUE (name, address_line_1),
-  CONSTRAINT unique_idx2 UNIQUE (name, address_line_1,city, state. zipcode),
+  CONSTRAINT unique_idx2 UNIQUE (name, address_line_1,city, state, zipcode),
   PRIMARY KEY (id)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 
 
@@ -114,7 +112,7 @@ CREATE TABLE IF NOT EXISTS yelp_links (
   category VARCHAR(200) DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
 
 
 
@@ -127,5 +125,47 @@ CREATE TABLE IF NOT EXISTS yellowpages_links (
   category VARCHAR(200) DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-) ENGINE=InnoDB
+) ENGINE=InnoDB;
+
+
+-- must meet google daily api quota
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('staticMapJob',0,25000,0,0,0,now());
+
+-- 2 million records to process
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('storeDataUpdateJob',0,2000000,0,0,0,now());
+
+-- 100 categories per job run; Currently has no categories in the topic table to run this job;  Use the link job instead
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('yellowpagesDataJob',0,100,0,0,0,now());
+
+-- 100 categories per job run; Currently has no categories in the topic table to run this job
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('yelpDataJob',0,100,0,0,0,now());
+
+-- generates a sitemap for google console to index
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('crawlerSiteMapJob',0,100,0,0,0,now());
+
+
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('userIdUpdateJob',0,100,0,0,0,now());
+
+-- must meet google daily api quota
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('cleanStoreJob',0,25000,0,0,0,now());
+
+-- same as cleanStoreJob but can be used for a different table
+INSERT INTO `business`.`job_state`
+(`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
+VALUES('cleanScrapperJob',0,25000,0,0,0,now());
+
 

@@ -28,7 +28,7 @@ import com.api.cron.batch.model.KeyValuePair;
  * Generate sitemap to feed to google web console.  Create chunks of 50k urls per file in filename sitemap-1-0.xml and
  * add the filename to the master sitemap.xml
  * 
- * crawlerSiteMapJob
+ * crawlerSiteMapJob and storeDataUpdateJob
  * 
  * @author khimung
  *

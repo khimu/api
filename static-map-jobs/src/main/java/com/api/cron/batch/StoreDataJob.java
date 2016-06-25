@@ -22,7 +22,7 @@ import com.api.cron.batch.model.JobStateCrons;
 /*
  * Update business_data with longitude and latitude
  * 
- * storeDataJob
+ * cleanStoreJob
  * 
  */
 public class StoreDataJob implements BatchJob {

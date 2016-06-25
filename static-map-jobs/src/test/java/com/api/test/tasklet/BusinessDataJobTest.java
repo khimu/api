@@ -12,7 +12,7 @@ public class BusinessDataJobTest {
 	@Test
 	public void testcleanStoreData() {
 		MainJob job = new MainJob();
-		job.main(new String[] { "cleanScrapperJob", "spring/batch/jobs/clean-scrapper-data.xml", "/opt/yellowpages-data/googleapi.properties"});
+		job.main(new String[] { "cleanScrapperJob", "spring/batch/jobs/clean-scrapper-data.xml", "/opt/scrapper_geocode/googleapi.properties"});
 	}
 	
 	@Test
