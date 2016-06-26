@@ -74,7 +74,7 @@ public class MongoTest {
 		for(int i = 0; i < keywords.size(); i ++) {
 			bulk.find(new BasicDBObject("store_id", keywords.get(i).getStoreId()))
 			.update(new BasicDBObject("$set", 
-					new BasicDBObject("public_store_key", keywords.get(i).getPublicStoreKey() ).append("key_words", keywords.get(i).getKeyWords() ) ));
+					new BasicDBObject("public_store_key", keywords.get(i).getPublicStoreKey() ).append("keywords", keywords.get(i).getKeyWords() ) ));
 		}
 		
 		BulkWriteResult writeResult = bulk.execute();

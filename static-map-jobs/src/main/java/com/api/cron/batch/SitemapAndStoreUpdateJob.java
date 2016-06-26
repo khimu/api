@@ -78,7 +78,7 @@ public class SitemapAndStoreUpdateJob implements BatchJob {
 			}
 	
 			
-			JdbcTemplate jdbcTemplate = (JdbcTemplate) context.getBean("localJdbcTemplate");
+			JdbcTemplate jobJdbcTemplate = (JdbcTemplate) context.getBean("localJdbcTemplate");
 			JobState jobState = (JobState) context.getBean("jobState");
 			Integer jobId = 0;
 			
@@ -98,6 +98,7 @@ public class SitemapAndStoreUpdateJob implements BatchJob {
 			/*
 			 * get map of category id to category name
 			 */
+			/*
 			cronJdbcTemplate.query("SELECT NOW();", (rs, rowNum) -> {
 				KeyValuePair<Integer, String> pair = new KeyValuePair<Integer, String>();
 				//pair.setKey(rs.getInt("_category_id"));
@@ -113,21 +114,24 @@ public class SitemapAndStoreUpdateJob implements BatchJob {
 				names.add(pair.getValue());
 				categories.put(pair.getKey(), names);
 			});
+			
 
 			logger.debug("categories size " + categories.size());
 			for(Map.Entry<Integer, List<String>> entry : categories.entrySet()) { 
 				logger.debug("categoryid " + entry.getKey() + " category names size " + entry.getValue().size());
 			}
+			*/
 
 
 			
 			List<JobStateCrons> crons = null;
 			try {
-				Integer maxId = jdbcTemplate.queryForObject(selectMaxId, new Object[]{jobName}, Integer.class);
-				crons = jdbcTemplate.query(selectDataProcessingJob, new Object[]{maxId}, new JobStateMapper());
+				Integer maxId = jobJdbcTemplate.queryForObject(selectMaxId, new Object[]{jobName}, Integer.class);
+				logger.info("Max id is " + maxId + " for job name " + jobName);
+				crons = jobJdbcTemplate.query(selectDataProcessingJob, new Object[]{maxId}, new JobStateMapper());
 			} catch(Exception e) {
 				logger.warn("Unable to retrieve job");
-				System.exit(0);
+				System.exit(1);
 			}
 			
 			if(crons != null && !crons.isEmpty()) {

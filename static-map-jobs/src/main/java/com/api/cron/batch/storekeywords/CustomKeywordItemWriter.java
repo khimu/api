@@ -58,7 +58,7 @@ public class CustomKeywordItemWriter implements ItemWriter<StoreKeywords>{
 				DBObject modifiedObject =new BasicDBObject();
 				modifiedObject.put("$set", new BasicDBObject()
 					.append("public_store_key", items.get(i).getPublicStoreKey())
-					.append("key_words", items.get(i).getKeyWords())
+					.append("keywords", items.get(i).getKeyWords())
 				);
 						
 				bulk.find(searchObject).

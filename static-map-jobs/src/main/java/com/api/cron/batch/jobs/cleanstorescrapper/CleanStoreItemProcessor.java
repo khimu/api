@@ -69,6 +69,7 @@ public class CleanStoreItemProcessor implements ItemProcessor<Store, Store> {
 			item.setLongitude(geocode.getResults().get("longitude"));
 			item.setLatitude(geocode.getResults().get("latitude"));
 	
+			logger.info("ID " + item.getStoreId() + " longitude[" + item.getLongitude() + "] latitude[" + item.getLatitude() + "]");
 			
 			/*
 			Map<String, String> placesPlaceholder = new HashMap<String, String>();

@@ -76,7 +76,7 @@ public class StaticMapsJob implements BatchJob {
 			
 			try {
 
-				String quota = props.getProperty("google.static.maps.quota");
+				String quota = props.getProperty("cron.job.daily.quota");
 				Integer lastProcessedStoreId = 0;
 				
 				List<JobStateCrons> crons = null;
@@ -85,7 +85,9 @@ public class StaticMapsJob implements BatchJob {
 				String lapseTime = DateFormatUtil.moveBy(-1, Calendar.DAY_OF_MONTH);
 				jobId = jdbcTemplate.queryForObject("select min(id) from job_state where job_name = ? and failed > 0 and last_processed_date < ?", new Object[]{jobName, lapseTime}, Integer.class);
 			
+				
 				if(jobId == null) {
+					logger.warn("Found 0 staticMapJob with failed > 0");
 					/*
 					 * No failed jobs, get the last job ran and create a new job
 					 */
@@ -111,6 +113,7 @@ public class StaticMapsJob implements BatchJob {
 					        return (Boolean) ps.execute();    
 					    };
 					    
+					    logger.warn("Inserting new staticMapJob with starting process key at " + lastProcessedStoreId);
 					    Boolean success = jdbcTemplate.execute("insert into job_state (job_name, last_processed_key, quota, already_exist, success, failed, last_processed_date) values (?,?,?,?,?,?,?)", psFunction);					
 					    jobId = jdbcTemplate.queryForObject("select max(id) from job_state where job_name = ?;", new Object[]{jobName}, Integer.class);
 					}catch(Exception e) {
@@ -127,6 +130,8 @@ public class StaticMapsJob implements BatchJob {
 					if(crons != null && !crons.isEmpty()) {
 						lastProcessedStoreId = crons.get(0).getLastProcessedKey();
 					}
+					
+					logger.warn("Rerunning staticMapJob with starting process key at " + lastProcessedStoreId);
 					
 					final Integer dataProcessingCronsId = jobId;
 				    PreparedStatementCallback<Boolean> psFunction = (ps) -> {

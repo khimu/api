@@ -17,17 +17,17 @@ public class SitemapMapper implements RowMapper<XmlUrl>  {
 		publicStoreKeyBuilder.append("=");
 		publicStoreKeyBuilder.append(rs.getString("address_line_1") == null ? "" : rs.getString("address_line_1").replaceAll("[\\s|\\W]+", "-"));
 		publicStoreKeyBuilder.append("-");
-		publicStoreKeyBuilder.append(rs.getString("city") == null ? "" : rs.getString("city").replace("([\\s|\\W]+)", "-"));
+		publicStoreKeyBuilder.append(rs.getString("city") == null ? "" : rs.getString("city").replaceAll("([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");
-		publicStoreKeyBuilder.append(rs.getString("state") == null ? "" : rs.getString("state").replace( "([\\s|\\W]+)", "-"));
+		publicStoreKeyBuilder.append(rs.getString("state") == null ? "" : rs.getString("state").replaceAll( "([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");		
-		publicStoreKeyBuilder.append(rs.getString("zipcode") == null ? "" : rs.getString("zipcode").replace("([\\s|\\W]+)", "-"));
+		publicStoreKeyBuilder.append(rs.getString("zipcode") == null ? "" : rs.getString("zipcode").replaceAll("([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");
 		publicStoreKeyBuilder.append(rs.getString("country_code") == null ? "" : CountryCode.getFullName(rs.getString("country_code")));
 		publicStoreKeyBuilder.append(".html");
 		
 		XmlUrl url = new XmlUrl();
-		url.setLoc(Constant.PAGE_URL + publicStoreKeyBuilder.toString());
+		url.setLoc(Constant.PAGE_URL + publicStoreKeyBuilder.toString().toLowerCase());
 		return url;
 	}
 }

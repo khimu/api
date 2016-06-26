@@ -18,6 +18,7 @@ public class ImageInfo implements TaskInfo, Serializable {
 	private String imageName;
 	private byte[] imageByte;
 	private boolean exist;
+	private Integer businessId;
 
 	public String getImageName() {
 		return imageName;
@@ -41,6 +42,14 @@ public class ImageInfo implements TaskInfo, Serializable {
 
 	public void setExist(boolean exist) {
 		this.exist = exist;
+	}
+
+	public Integer getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(Integer businessId) {
+		this.businessId = businessId;
 	}
 
 }

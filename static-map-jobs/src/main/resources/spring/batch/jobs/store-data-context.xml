@@ -61,7 +61,7 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
-				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code" />
+				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, phone, website, email, category" />
 				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId" />
 				<property name="sortKey" value="id" />

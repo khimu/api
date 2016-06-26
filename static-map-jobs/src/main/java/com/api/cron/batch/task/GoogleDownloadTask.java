@@ -3,6 +3,10 @@ package com.api.cron.batch.task;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,6 +28,9 @@ public class GoogleDownloadTask implements Task {
 
 	@Resource
 	private RestTemplate restTemplate;
+	
+	@Resource
+	private MongoTemplate mongoTemplate;
 	
 	private int order;
 
@@ -49,6 +56,15 @@ public class GoogleDownloadTask implements Task {
 			byte[] resultString = response.getBody();
 	
 			imageMetadata.setImageByte(resultString);
+			
+			Update update = new Update();
+			update.set("filename", imageMetadata.getImageName());
+			update.set("bytes", resultString);
+			
+			Query query = new Query();
+			query.addCriteria(Criteria.where("store_id").is(imageMetadata.getBusinessId()));
+			
+			mongoTemplate.upsert(query, update, "bname");
 			
 			logger.debug("Download file successful " + googleMetadata.getServiceEndpoint());
 		}

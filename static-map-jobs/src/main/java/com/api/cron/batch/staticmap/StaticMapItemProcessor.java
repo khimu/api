@@ -62,6 +62,7 @@ public class StaticMapItemProcessor implements ItemProcessor<StaticMapStore, Sta
 			item.addMetadata(GoogleInfo.class.getSimpleName(), googleMetadata);
 			
 			ImageInfo imageMetadata = new ImageInfo();
+			imageMetadata.setBusinessId(store.getStoreId());
 			imageMetadata.setImageName(prefix + store.getStoreId() + suffix);
 			
 			item.addMetadata(ImageInfo.class.getSimpleName(), imageMetadata);

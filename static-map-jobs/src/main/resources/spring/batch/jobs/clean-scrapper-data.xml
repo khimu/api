@@ -11,6 +11,8 @@
         http://www.springframework.org/schema/util 
 		http://www.springframework.org/schema/util/spring-util-4.0.xsd">
     
+	<!--  This is just like clean-store-data but duplicated to be used with a different table -->	
+	
 	
 	<!-- Using properties file to replace properties in xml configuration file -->
 	<bean id="jobProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -54,7 +56,7 @@
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="dataSource" />
 				<property name="selectClause" value="select id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, phone, website, email, category" />
-				<property name="fromClause" value="from business_data" />
+				<property name="fromClause" value="from yellowpages_data" />
 				<property name="whereClause" value="where id &gt;= :fromId and id &lt;= :toId and longitude is null or latitude is null" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -79,7 +81,7 @@
 	<property name="sql">
 	  <value>
             <![CDATA[       
-            	UPDATE business_data SET `longitude` = :longitude, `latitude` = :latitude WHERE `id` = :storeId; 
+            	UPDATE yellowpages_data SET `longitude` = :longitude, `latitude` = :latitude WHERE `id` = :storeId; 
             ]]>
 	  </value>
 	</property>

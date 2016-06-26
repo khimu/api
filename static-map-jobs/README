@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS yellowpages_links (
 -- must meet google daily api quota
 INSERT INTO `business`.`job_state`
 (`job_name`,`last_processed_key`,`quota`,`already_exist`,`success`,`failed`,`last_processed_date`)
-VALUES('staticMapJob',0,25000,0,0,0,now());
+VALUES('staticMapJob',0,25000,0,0,1,NOW() - INTERVAL 1 DAY);
 
 -- 2 million records to process
 INSERT INTO `business`.`job_state`
@@ -169,3 +169,28 @@ INSERT INTO `business`.`job_state`
 VALUES('cleanScrapperJob',0,25000,0,0,0,now());
 
 
+INSERT IGNORE
+  INTO business_data 
+SELECT *
+  FROM yelp_data
+     ;
+     
+     
+     
+INSERT IGNORE
+  INTO business_data 
+SELECT *
+  FROM yellowpages_data
+     ;
+
+
+
+mongo --shell
+use business_scrapper;
+show collections;
+db.bname.find({});
+db.bname.find({}).count();
+show dbs;
+
+
+db.bname.createIndex( { store_id: 1 } )

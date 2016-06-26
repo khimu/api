@@ -5,13 +5,13 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.api.cron.batch.model.YellowpagesLink;
+import com.api.cron.batch.model.Link;
 
-public class LinkMapper implements RowMapper<YellowpagesLink>  {
+public class LinkMapper implements RowMapper<Link>  {
 
 	@Override
-	public YellowpagesLink mapRow(ResultSet rs, int arg1) throws SQLException {
-		YellowpagesLink link = new YellowpagesLink();
+	public Link mapRow(ResultSet rs, int arg1) throws SQLException {
+		Link link = new Link();
 		link.setId(rs.getInt("id"));
 		link.setLink(rs.getString("link"));
 		link.setCity(rs.getString("city"));

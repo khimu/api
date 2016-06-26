@@ -88,6 +88,7 @@ public class StoreKeywordItemReader implements ItemReader<StoreKeywords> {
 		/*
 		 * get map of store id to category id
 		 */
+		/*
 		jdbcTemplate.query("SELECT NOW();", new Object[] {fromId, toId}, (rs, rowNum) -> {
 			KeyValuePair<Integer, Integer> pair = new KeyValuePair<Integer, Integer>();
 			//pair.setKey(rs.getInt("_store_id"));
@@ -98,6 +99,7 @@ public class StoreKeywordItemReader implements ItemReader<StoreKeywords> {
 		})
 		.stream()
 		.forEach(pair -> storesCategories.put(pair.getKey(), pair.getValue()));		
+		*/
 		
 		logger.debug("Store Categories list size " + this.storesCategories.size());
 	}
@@ -124,52 +126,24 @@ public class StoreKeywordItemReader implements ItemReader<StoreKeywords> {
 		publicStoreKeyBuilder.append("=");
 		publicStoreKeyBuilder.append(store.getAddressLine1() == null ? "" : store.getAddressLine1().replaceAll("[\\s|\\W]+", "-"));
 		publicStoreKeyBuilder.append("-");
-		publicStoreKeyBuilder.append(store.getAddressLine2() == null ? "" : store.getAddressLine2().replace("[\\s|\\W]+", "-"));
+		publicStoreKeyBuilder.append(store.getCity() == null ? "" : store.getCity().replaceAll("([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");
-		publicStoreKeyBuilder.append(store.getCity() == null ? "" : store.getCity().replace("([\\s|\\W]+)", "-"));
-		publicStoreKeyBuilder.append("-");
-		publicStoreKeyBuilder.append(store.getState() == null ? "" : store.getState().replace( "([\\s|\\W]+)", "-"));
+		publicStoreKeyBuilder.append(store.getState() == null ? "" : store.getState().replaceAll( "([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");		
-		publicStoreKeyBuilder.append(store.getZipcode() == null ? "" : store.getZipcode().replace("([\\s|\\W]+)", "-"));
+		publicStoreKeyBuilder.append(store.getZipcode() == null ? "" : store.getZipcode().replaceAll("([\\s|\\W]+)", "-"));
 		publicStoreKeyBuilder.append("-");
 		publicStoreKeyBuilder.append(store.getCountryCode() == null ? "" : CountryCode.getFullName(store.getCountryCode()));
 		
 
 		logger.info(publicStoreKeyBuilder.toString().toLowerCase());
-		
-		Integer categoryId = this.storesCategories.get(store.getStoreId());
-		
+				
 		StoreKeywords item = new StoreKeywords();
 		
 		item.setStoreId(store.getStoreId());
 		item.setPublicStoreKey(publicStoreKeyBuilder.toString().toLowerCase());
-		item.setKeyWords("");
-		
-		
-		StringBuilder keywordBuilder = new StringBuilder();
-		
-		
-		if(categoryId == null) {
-			logger.error("Store category is not valid and keywords cannot be generated for storeId " + store.getStoreId());
-			//throw new TaskException("Store category is not valid and keywords cannot be generated for storeId " + store.getStoreId());
-		}
-		else {
-			logger.debug("CategoryId " + categoryId + " store Id " + store.getStoreId());
-			List<String> categoryNames = this.categories.get(categoryId);
-			
-			if(categoryNames == null) {
-				logger.error("Store category is not valid and keywords cannot be generated for storeId " + store.getStoreId() + " with category Id " + categoryId);
-				//throw new TaskException("Store category is not valid and keywords cannot be generated for storeId " + store.getStoreId() + " with category Id " + categoryId);
-			}
-			else {
-				logger.debug("names.size " + categoryNames.size());
-	
-				for(String categoryName : categoryNames) {
-					keywordBuilder.append(categoryName.toLowerCase().replaceAll("-", " "));
-					keywordBuilder.append(", ");
-				}
-				item.setKeyWords(keywordBuilder.toString().trim());
-			}
+
+		if(store.getCategory() != null) {
+			item.setKeyWords(store.getCategory().toLowerCase().trim());
 		}
 		
 		

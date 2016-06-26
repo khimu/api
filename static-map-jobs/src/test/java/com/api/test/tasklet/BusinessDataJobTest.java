@@ -10,9 +10,16 @@ public class BusinessDataJobTest {
 	private final static Logger logger = Logger.getLogger(CronJobTest.class);
 	
 	@Test
+	public void testSitemap() {
+		MainJob job = new MainJob();
+		job.main(new String[] { "crawlerSiteMapJob", "spring/batch/jobs/crawler-sitemap.xml", "/opt/sitemaps/googleapi.properties"});
+	}
+		
+	
+	@Test
 	public void testcleanStoreData() {
 		MainJob job = new MainJob();
-		job.main(new String[] { "cleanScrapperJob", "spring/batch/jobs/clean-scrapper-data.xml", "/opt/scrapper_geocode/googleapi.properties"});
+		job.main(new String[] { "cleanStoreJob", "spring/batch/jobs/clean-store-data.xml", "/opt/geocode/googleapi.properties"});
 	}
 	
 	@Test

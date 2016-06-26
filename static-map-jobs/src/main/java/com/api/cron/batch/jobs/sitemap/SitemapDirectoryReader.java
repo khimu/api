@@ -1,5 +1,7 @@
 package com.api.cron.batch.jobs.sitemap;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,7 +9,8 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.stream.Stream;
 
 import org.springframework.batch.item.ItemReader;
@@ -21,27 +24,31 @@ import org.springframework.stereotype.Component;
 @Scope("step")
 public class SitemapDirectoryReader implements ItemReader<SitemapFile> {
 
-	private Iterator<Path> sitemapFiles;
+	private Queue<Path> fileNames;
 	
     public SitemapDirectoryReader() throws IOException {
+    	fileNames = new LinkedList<Path>();
+
+		//final FilenameFilter filter = (dir, name) -> !dir.isDirectory() && name.toLowerCase().endsWith(".xml");
+		
 		final Path p = Paths.get("/", "opt", "sitemaps", "sitemap");
 		final PathMatcher filter = p.getFileSystem().getPathMatcher("glob:/**/sitemap-*.xml");
-
+		
 		try (final Stream<Path> stream = Files.list(p)) {
-			sitemapFiles = stream.filter(filter::matches).iterator();
+		    stream.filter(filter::matches)
+		          .forEach(fileNames::add);
 		}
-
     }
 
 	@Override
 	public SitemapFile read() throws Exception, UnexpectedInputException,
 			ParseException, NonTransientResourceException {
-		if(sitemapFiles == null) {
+		if(fileNames == null) {
 			return null;
 		}
 		
-		if(sitemapFiles.hasNext()) {
-			Path path = sitemapFiles.next();
+		if(!fileNames.isEmpty()) {
+			Path path = fileNames.remove();
 			/*
 			   <?xml version="1.0" encoding="UTF-8"?>
 			   <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -55,7 +62,7 @@ public class SitemapDirectoryReader implements ItemReader<SitemapFile> {
 				   </sitemap>
 			   </sitemapindex>
 			 */
-			SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
 			SitemapFile file = new SitemapFile();
 			file.setLastMod(format.format(new Date()));

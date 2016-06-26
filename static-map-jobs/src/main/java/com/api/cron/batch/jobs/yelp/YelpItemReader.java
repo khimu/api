@@ -15,11 +15,14 @@ import org.springframework.stereotype.Component;
 import com.api.cron.batch.jobitems.JobState;
 import com.api.cron.batch.jobitems.StoresItem;
 import com.api.cron.batch.metadata.YellowPageInfo;
+import com.api.cron.batch.metadata.YelpInfo;
 import com.api.cron.batch.metadata.YellowPageInfo.YellowPageMetadataBuilder;
+import com.api.cron.batch.metadata.YelpInfo.YelpBuilder;
 import com.api.cron.batch.model.Store;
-import com.api.cron.batch.model.YellowpagesLink;
+import com.api.cron.batch.model.Link;
 import com.api.cron.batch.task.TaskException;
 import com.api.cron.batch.task.YellowPagesTask;
+import com.api.cron.batch.task.YelpPagesTask;
 
 /**
  * Use category to retrieve business name and address from yellowpage
@@ -52,23 +55,24 @@ public class YelpItemReader implements ItemReader<StoresItem> {
 	private JobState jobState;
 	
 	@Resource
-	private ItemReader<YellowpagesLink> linksItemReader;
+	private ItemReader<Link> linksItemReader;
 
 	
 	@Override
 	public StoresItem read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException, TaskException {
-		YellowpagesLink link = linksItemReader.read();
+		Link link = linksItemReader.read();
 		if(link == null) {
 			logger.info("ifos is null");
 			return null;
 		}
 
 		try {
-			YellowPageInfo info = new YellowPageMetadataBuilder().setNaics(null).setCategory(link.getCategory()).setLocation(link.getCity() + ", " + link.getState()).setPage(link.getPage().toString()).execute(); 
-
+			YelpInfo info = new YelpBuilder().setNaics(null).setCategory(link.getCategory()).setLocation(link.getCity() + ", " + link.getState()).setPage(link.getPage().toString()).execute(); 
 			logger.info("working on " + info.getServiceEndpoint() + " for id range " + fromId + " " + toId);
 			
-			YellowPagesTask task = new YellowPagesTask();
+			// get the first page and determine how many results for the given category and location
+			YelpPagesTask task = new YelpPagesTask();
+
 			task.execute(info);
 			logger.info("executed ");
 			
@@ -85,13 +89,10 @@ public class YelpItemReader implements ItemReader<StoresItem> {
 						continue;
 					}
 					store.setName(storeName);
-					store.setWebsite(task.getNextWebsite());
 					store.setPhoneNumber(task.getNextPhones() == null ? "" : task.getNextPhones());
 					store.setState(link.getState());
-					store.setCity(task.getNextCity());
-					store.setAddressLine1(task.getNextStreetAddress());
-					store.setZipcode(task.getNextPostalCode());
-					store.setFullAddress(task.getNextAddress());
+					store.setCity(link.getCity());
+					store.setFullAddress(task.getNextFullAddress());
 					store.setCategory(link.getCategory());
 					logger.info("after parsing");
 	

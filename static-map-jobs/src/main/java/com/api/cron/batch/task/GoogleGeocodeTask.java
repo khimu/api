@@ -69,7 +69,7 @@ public class GoogleGeocodeTask  implements Task {
 				logger.debug(longitude + " " + latitude);
 			}
 
-			logger.info("Geocode successful " + googleMetadata.getServiceEndpoint());
+			logger.debug("Geocode successful " + googleMetadata.getServiceEndpoint());
 		}
 		catch(Exception e) {
 			e.printStackTrace();

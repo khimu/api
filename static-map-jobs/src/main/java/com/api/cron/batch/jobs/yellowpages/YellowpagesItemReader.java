@@ -17,7 +17,7 @@ import com.api.cron.batch.jobitems.StoresItem;
 import com.api.cron.batch.metadata.YellowPageInfo;
 import com.api.cron.batch.metadata.YellowPageInfo.YellowPageMetadataBuilder;
 import com.api.cron.batch.model.Store;
-import com.api.cron.batch.model.YellowpagesLink;
+import com.api.cron.batch.model.Link;
 import com.api.cron.batch.task.TaskException;
 import com.api.cron.batch.task.YellowPagesTask;
 
@@ -52,12 +52,12 @@ public class YellowpagesItemReader implements ItemReader<StoresItem> {
 	private JobState jobState;
 	
 	@Resource
-	private ItemReader<YellowpagesLink> linksItemReader;
+	private ItemReader<Link> linksItemReader;
 
 	
 	@Override
 	public StoresItem read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException, TaskException {
-		YellowpagesLink link = linksItemReader.read();
+		Link link = linksItemReader.read();
 		if(link == null) {
 			logger.info("ifos is null");
 			return null;
