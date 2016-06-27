@@ -1,4 +1,4 @@
-package com.clout.cron.batch;
+package com.api.cron.batch;
 
 public interface BatchJob {
 

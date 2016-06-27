@@ -1,4 +1,4 @@
-package com.clout.cron.batch.jobs.cache;
+package com.api.cron.batch.jobs.cache;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,8 +18,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.clout.cron.batch.mapper.StoreMapper;
-import com.clout.cron.batch.model.Store;
+import com.api.cron.batch.mapper.StoreMapper;
+import com.api.cron.batch.model.Store;
 
 /*
  * Only used for testing when DB has issues

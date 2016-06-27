@@ -8,7 +8,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.clout.cron.batch.util.DateFormatUtil;
+import com.api.cron.batch.util.DateFormatUtil;
 
 public class FormatDateTest {
 

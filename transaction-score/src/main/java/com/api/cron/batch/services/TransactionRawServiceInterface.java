@@ -1,6 +1,6 @@
-package com.clout.cron.batch.services;
+package com.api.cron.batch.services;
 
-import com.clout.cron.batch.CronJobException;
+import com.api.cron.batch.CronJobException;
 
 public interface TransactionRawServiceInterface {
 	

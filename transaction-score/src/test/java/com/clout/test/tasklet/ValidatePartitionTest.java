@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import com.clout.cron.batch.jobitems.JobState;
-import com.clout.cron.batch.model.Users;
+import com.api.cron.batch.jobitems.JobState;
+import com.api.cron.batch.model.Users;
 
 import junit.framework.Assert;
 

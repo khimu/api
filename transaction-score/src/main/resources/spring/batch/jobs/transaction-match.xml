@@ -5,22 +5,22 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/batch
 		http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
 		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/util 
-		http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 
-	<context:component-scan base-package="com.clout.cron.specialcase"/>
+	<context:component-scan base-package="com.api.cron.specialcase"/>
 
 
 	<!-- Using properties file to replace properties in xml configuration file -->
 	<bean id="jobProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="file:/opt/cloutjobs/match/transaction_match.properties" />
+		<property name="location" value="file:/opt/match/transaction_match.properties" />
 	</bean>
 	
-	<bean id="idService" class="com.clout.cron.specialcase.IdServiceImpl">
+	<bean id="idService" class="com.api.cron.specialcase.IdServiceImpl">
 	</bean>	
 
 	<util:map id="plaidCategoryMatches" map-class="java.util.HashMap">
@@ -89,7 +89,7 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.TransactionsRawMapper" />
+			<bean class="com.api.cron.batch.mapper.TransactionsRawMapper" />
 		</property>
 	</bean>
 
@@ -119,8 +119,8 @@
 	<property name="sql">
 	  <value>
             <![CDATA[       
-    			INSERT INTO stores (id, _chain_id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, _country_code, key_words, public_store_key, clout_id, start_date, email_address, has_multiple_locations, online_only, _store_owner_id, logo_url, slogan, small_cover_image, large_cover_image, _state_id, phone_number, _primary_contact_id, website, star_rating, price_range, description, is_franchise, date_entered, _entered_by, last_updated, _last_updated_by)
-				VALUES (:storeId, :chainId, :longitude, :latitude, :name, :addressLine1, :addressLine2, :city, :state, :zipcode, :countryCode, :keyWords, :publicStoreKey, :cloutId, now(), :emailAddress, :hasMultipleLocations, :onlineOnly, :storeOwnerId, :logoUrl, :slogan, :smallCoverImage, '', :stateId, :phoneNumber, :primaryContactId, :website, :starRating, :priceRange, '', :isFranchise, now(), :enteredBy, now(), :lastUpdatedBy); 
+    			INSERT INTO business_data (id, longitude, latitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, key_words, public_store_key, website)
+				VALUES (:storeId, :longitude, :latitude, :name, :addressLine1, :addressLine2, :city, :state, :zipcode, :countryCode, :keyWords, :publicStoreKey,  :website); 
 	           ]]>
 	  </value>
 	</property>
@@ -140,7 +140,7 @@
 	<property name="sql">
 	  <value>
             <![CDATA[       
-            	UPDATE stores SET name = :name, address_line_1 = :addressLine1, city = :city, state = :state, zip_code = :zipcode, phone_number = :phoneNumber, key_words = :keyWords, public_store_key = :publicStoreKey  WHERE id = :storeId; 
+            	UPDATE business_data SET name = :name, address_line_1 = :addressLine1, city = :city, state = :state, zip_code = :zipcode, phone_number = :phoneNumber, key_words = :keyWords, public_store_key = :publicStoreKey  WHERE id = :storeId; 
             ]]>
 	  </value>
 	</property>
@@ -213,8 +213,8 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="readStoreDataSource" />
-				<property name="selectClause" value="select id, latitude, longitude, name, address_line_1, address_line_2, city, state, zipcode, _country_code, phone_number, website, public_store_key, key_words" />
-				<property name="fromClause" value="from stores" />
+				<property name="selectClause" value="select id, latitude, longitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, phone_number, website, public_store_key, key_words" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id &gt;= :cacheFromId and id &lt;= :cacheToId" />
 				<property name="sortKey" value="id" />
 			</bean>
@@ -228,7 +228,7 @@
 		</property>		
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StoreMapper" />
 		</property>
 	</bean>
 	
@@ -242,15 +242,15 @@
 			<bean
 				class="org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean">
 				<property name="dataSource" ref="readStoreDataSource" />
-				<property name="selectClause" value="select id, latitude, longitude, name, address_line_1, address_line_2, city, state, zipcode, _country_code, phone_number, website, public_store_key, key_words" />
-				<property name="fromClause" value="from stores" />
+				<property name="selectClause" value="select id, latitude, longitude, name, address_line_1, address_line_2, city, state, zipcode, country_code, phone_number, website, public_store_key, key_words" />
+				<property name="fromClause" value="from business_data" />
 				<property name="whereClause" value="where id in (#{jobExecutionContext['failedStoreIds']})" />
 				<property name="sortKey" value="id" />
 			</bean>
 		</property>   
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StoreMapper" />
 		</property>
 	</bean>
 

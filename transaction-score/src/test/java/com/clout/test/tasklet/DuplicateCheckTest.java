@@ -3,8 +3,8 @@ package com.clout.test.tasklet;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.clout.cron.batch.common.tasklet.DuplicateCheck;
-import com.clout.cron.batch.jobitems.JobState;
+import com.api.cron.batch.common.tasklet.DuplicateCheck;
+import com.api.cron.batch.jobitems.JobState;
 
 
 public class DuplicateCheckTest {

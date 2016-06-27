@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/batch
 		http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
 		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 
-	<context:component-scan base-package="com.clout.cron.batch"/>
+	<context:component-scan base-package="com.api.cron.batch"/>
 
 	<bean id="taskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor"/>
 
@@ -41,5 +41,6 @@
 	        </bean>
 	    </constructor-arg>
 	</bean>	
+	
 
 </beans>

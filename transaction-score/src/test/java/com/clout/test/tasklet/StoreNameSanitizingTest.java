@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.clout.cron.batch.util.StringSanitizerUtil;
+import com.api.cron.batch.util.StringSanitizerUtil;
 
 public class StoreNameSanitizingTest {
 

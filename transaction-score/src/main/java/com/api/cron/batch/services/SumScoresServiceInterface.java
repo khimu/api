@@ -1,4 +1,4 @@
-package com.clout.cron.batch.services;
+package com.api.cron.batch.services;
 
 public interface SumScoresServiceInterface {
 

@@ -1,4 +1,4 @@
-package com.clout.cron.batch.jobs.match;
+package com.api.cron.batch.jobs.match;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,18 +19,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clout.cron.batch.common.tasklet.DuplicateCheck;
-import com.clout.cron.batch.jobitems.BusinessItem;
-import com.clout.cron.batch.jobitems.JobState;
-import com.clout.cron.batch.model.MongoStoreKeys;
-import com.clout.cron.batch.model.Store;
-import com.clout.cron.batch.model.TransactionSubCategories;
-import com.clout.cron.batch.model.Transactions;
-import com.clout.cron.batch.model.TransactionsRaw;
-import com.clout.cron.batch.services.StoreMatchPatternServiceInterface;
-import com.clout.cron.batch.util.AddressSanitizationUtil;
-import com.clout.cron.batch.util.StringSanitizerUtil;
-import com.clout.cron.specialcase.IdService;
+import com.api.cron.batch.common.tasklet.DuplicateCheck;
+import com.api.cron.batch.jobitems.BusinessItem;
+import com.api.cron.batch.jobitems.JobState;
+import com.api.cron.batch.model.MongoStoreKeys;
+import com.api.cron.batch.model.Store;
+import com.api.cron.batch.model.TransactionSubCategories;
+import com.api.cron.batch.model.Transactions;
+import com.api.cron.batch.model.TransactionsRaw;
+import com.api.cron.batch.services.StoreMatchPatternServiceInterface;
+import com.api.cron.batch.util.AddressSanitizationUtil;
+import com.api.cron.batch.util.StringSanitizerUtil;
+import com.api.cron.specialcase.IdService;
 
 @Component("businessDataItemProcessor")
 @Scope("step")

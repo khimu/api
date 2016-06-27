@@ -1,4 +1,4 @@
-package com.clout.cron.batch.mapper;
+package com.api.cron.batch.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.clout.cron.batch.model.Store;
+import com.api.cron.batch.model.Store;
 
 
 
@@ -35,7 +35,7 @@ public class StoreMapper implements RowMapper<Store>  {
 		store.setCity(arg0.getString("city"));
 		store.setState(arg0.getString("state"));
 		store.setZipcode(arg0.getString("zipcode"));
-		store.setCountryCode(arg0.getString("_country_code"));	
+		store.setCountryCode(arg0.getString("country_code"));	
 		store.setPhoneNumber(arg0.getInt("phone_number"));
 		store.setWebsite(arg0.getString("website"));
 		store.setPublicStoreKey(arg0.getString("public_store_key"));

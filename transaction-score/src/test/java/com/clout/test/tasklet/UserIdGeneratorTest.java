@@ -3,7 +3,7 @@ package com.clout.test.tasklet;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
-import com.clout.cron.batch.model.Users;
+import com.api.cron.batch.model.Users;
 
 public class UserIdGeneratorTest {
 	

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS job_state (
   already_exist int(20) DEFAULT NULL,
   success int(20) DEFAULT NULL,
   failed int(20) DEFAULT NULL,
-  last_processed_date TIMESTAMP DEFAULT NULL,
+  last_processed_date DATETIME DEFAULT NULL,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;

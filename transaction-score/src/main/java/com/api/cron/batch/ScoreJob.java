@@ -1,4 +1,4 @@
-package com.clout.cron.batch;
+package com.api.cron.batch;
 
 import java.io.FileInputStream;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.clout.cron.batch.mapper.TransactionScoreJobsMapper;
-import com.clout.cron.batch.model.TransactionScoreJobs;
+import com.api.cron.batch.mapper.TransactionScoreJobsMapper;
+import com.api.cron.batch.model.TransactionScoreJobs;
 
 /*
  * Run the cache to cache stores by business id.

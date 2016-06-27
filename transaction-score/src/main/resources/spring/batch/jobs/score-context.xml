@@ -5,25 +5,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/batch
 		http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
 		http://www.springframework.org/schema/beans 
-		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 		http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/util 
-		http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- Using properties file to replace properties in xml configuration file -->
 	<bean id="jobProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="file:/opt/cloutjobs/score/score.properties" />
+		<property name="location" value="file:/opt/score/score.properties" />
 	</bean>
-		
-	<util:list id="naicsCategory" value-type="com.clout.cron.batch.model.Naics">
-	</util:list>
-	
-	<util:map id="categoryLevel2Mapping" map-class="java.util.HashMap">
-    </util:map>
- 
- 	<util:map id="categoryLevel2ToNaicsMapping" map-class="java.util.HashMap">
-    </util:map>   
     
 
 	<batch:job id="scoreJob">	
@@ -82,7 +73,7 @@
 		</property>
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.TransactionsMapper" />
+			<bean class="com.api.cron.batch.mapper.TransactionsMapper" />
 		</property>
 	</bean>
 	
@@ -142,7 +133,7 @@
 		</property>		
 		<property name="pageSize" value="1000" />
 		<property name="rowMapper">
-			<bean class="com.clout.cron.batch.mapper.StoreMapper" />
+			<bean class="com.api.cron.batch.mapper.StoreMapper" />
 		</property>
 	</bean>
 	

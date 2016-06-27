@@ -1,4 +1,4 @@
-package com.clout.cron.batch.services;
+package com.api.cron.batch.services;
 
 import java.util.List;
 import java.util.Map;
@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
-import com.clout.cron.batch.model.Store;
-import com.clout.cron.batch.util.AddressSanitizationUtil;
-import com.clout.cron.batch.util.StringSanitizerUtil;
+import com.api.cron.batch.model.Store;
+import com.api.cron.batch.util.AddressSanitizationUtil;
+import com.api.cron.batch.util.StringSanitizerUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BulkWriteOperation;
 import com.mongodb.BulkWriteResult;

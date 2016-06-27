@@ -1,4 +1,4 @@
-package com.clout.cron.batch.partitioner;
+package com.api.cron.batch.partitioner;
 
 import java.util.HashMap;
 import java.util.Map;

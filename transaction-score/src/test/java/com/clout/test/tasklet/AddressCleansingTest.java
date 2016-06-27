@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.clout.cron.batch.util.AddressSanitizationUtil;
-import com.clout.cron.batch.util.StringSanitizerUtil;
+import com.api.cron.batch.util.AddressSanitizationUtil;
+import com.api.cron.batch.util.StringSanitizerUtil;
 
 import junit.framework.Assert;
 

@@ -1,4 +1,4 @@
-package com.clout.cron.batch;
+package com.api.cron.batch;
 
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.clout.cron.batch.services.SumScoresServiceInterface;
+import com.api.cron.batch.services.SumScoresServiceInterface;
 
 /*
  * Compute the final score for 90 days or 12 months, etc

@@ -4,3 +4,170 @@ gradle wrapper
 Usage
   java -jar target/dummy.googleapi-0.0.1-SNAPSHOT.jar
 
+
+
+CREATE TABLE IF NOT EXISTS transactions_match_jobs (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  last_processed_key BIGINT(11) DEFAULT NULL,
+  last_cached_store_key BIGINT(11) DEFAULT NULL,
+  rejected int(20) DEFAULT NULL,
+  matched int(20) DEFAULT NULL,
+  new_store int(20) DEFAULT NULL,
+  from_cache int(20) DEFAULT NULL,
+  success int(20) DEFAULT NULL,
+  failed int(20) DEFAULT NULL,
+  last_processed_date DATETIME DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+
+CREATE TABLE IF NOT EXISTS store_score_jobs (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  last_processed_key BIGINT(11) DEFAULT NULL,
+  already_exist int(20) DEFAULT NULL,
+  success int(20) DEFAULT NULL,
+  failed int(20) DEFAULT NULL,
+  last_processed_date DATETIME DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS transaction_sub_categories (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  _transaction_id BIGINT(11) DEFAULT NULL,
+  _sub_category_id BIGINT(11) DEFAULT NULL,
+  _category_id BIGINT(11) DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+
+		
+CREATE TABLE IF NOT EXISTS transactions_raw (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  transaction_id VARCHAR(100) DEFAULT NULL,
+  transaction_type VARCHAR(100) DEFAULT NULL,
+  _user_id BIGINT(11) DEFAULT NULL,
+  _bank_id BIGINT(11) DEFAULT NULL,
+  amount DOUBLE(16,2) DEFAULT NULL,
+  latitude VARCHAR(100) DEFAULT NULL,
+  longitude VARCHAR(100) DEFAULT NULL,
+  city VARCHAR(100) DEFAULT NULL,
+  state VARCHAR(100) DEFAULT NULL,
+  address VARCHAR(100) DEFAULT NULL,
+  zipcode VARCHAR(20) DEFAULT NULL,
+  country_code VARCHAR(100) DEFAULT NULL,
+  website VARCHAR(200) DEFAULT NULL,
+  contact_telephone VARCHAR(50) DEFAULT NULL,
+  confidence_level FLOAT(3,2) DEFAULT NULL,
+  place_type VARCHAR(50) DEFAULT NULL,
+  currency_type VARCHAR(50) DEFAULT NULL,
+  institution_transaction_id VARCHAR(50) DEFAULT NULL,
+  correct_institution_transaction_id VARCHAR(50) DEFAULT NULL,
+  correct_action VARCHAR(50) DEFAULT NULL,
+  server_transaction_id VARCHAR(50) DEFAULT NULL,
+  check_number VARCHAR(50) DEFAULT NULL,
+  reference_number VARCHAR(50) DEFAULT NULL,
+  confirmation_number VARCHAR(50) DEFAULT NULL,
+  payee_id VARCHAR(50) DEFAULT NULL,
+  payee_name VARCHAR(50) DEFAULT NULL,
+  extended_payee_name VARCHAR(50) DEFAULT NULL,
+  memo VARCHAR(50) DEFAULT NULL,
+  type VARCHAR(50) DEFAULT NULL,
+  value_type VARCHAR(50) DEFAULT NULL,
+  currency_rate VARCHAR(50) DEFAULT NULL,
+  original_currency VARCHAR(50) DEFAULT NULL,
+  available_date DATETIME DEFAULT NULL,
+  pending varchar(10) DEFAULT NULL,
+  normalized_payee_name varchar(100) DEFAULT NULL,
+  merchant varchar(100) DEFAULT NULL,
+  sic varchar(100) DEFAULT NULL,
+  source varchar(100) DEFAULT NULL,
+  context_type varchar(100) DEFAULT NULL,
+  schedule_c varchar(100) DEFAULT NULL,
+  clout_transaction_id varchar(100) DEFAULT NULL,
+  sub_category_id varchar(100) DEFAULT NULL,
+  related_ad_id varchar(100) DEFAULT NULL,
+  api_account varchar(100) DEFAULT NULL,
+  banking_transaction_type varchar(100) DEFAULT NULL,
+  subaccount_fund_type varchar(100) DEFAULT NULL,
+  banking_401k_source_type varchar(100) DEFAULT NULL,
+  is_saved varchar(100) DEFAULT NULL,
+  is_active varchar(100) DEFAULT NULL,
+  is_processed varchar(100) DEFAULT NULL,
+  running_balance_amount DOUBLE(16,2) DEFAULT NULL,
+  principal_amount DOUBLE(16,2) DEFAULT NULL,
+  interest_amount DOUBLE(16,2) DEFAULT NULL,
+  escrow_total_amount DOUBLE(16,2) DEFAULT NULL,
+  escrow_fees_amount DOUBLE(16,2) DEFAULT NULL,
+  escrow_pmi_amount DOUBLE(16,2) DEFAULT NULL,
+  escrow_tax_amount DOUBLE(16,2) DEFAULT NULL,
+  escrow_other_amount DOUBLE(16,2) DEFAULT NULL,
+  last_update_date DATETIME DEFAULT NULL,
+  posted_date DATETIME DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+
+		
+CREATE TABLE IF NOT EXISTS transactions (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  transaction_type VARCHAR(100) DEFAULT NULL,
+  _user_id BIGINT(11) DEFAULT NULL,
+  _bank_id BIGINT(11) DEFAULT NULL,
+  _chain_id BIGINT(11) DEFAULT NULL,
+  _store_id BIGINT(11) DEFAULT NULL,
+  _raw_id BIGINT(11) DEFAULT NULL,
+  _related_promotion_id BIGINT(11) DEFAULT NULL,
+  status VARCHAR(20) DEFAULT NULL,  
+  amount DOUBLE(16,2) DEFAULT NULL,
+  raw_store_name VARCHAR(100) DEFAULT NULL,
+  start_date DATETIME DEFAULT NULL,
+  end_date DATETIME DEFAULT NULL,
+  item_value DOUBLE(16,2) DEFAULT NULL,
+  transaction_tax DOUBLE(16,2) DEFAULT NULL,
+  latitude VARCHAR(100) DEFAULT NULL,
+  longitude VARCHAR(100) DEFAULT NULL,
+  city VARCHAR(100) DEFAULT NULL,
+  state VARCHAR(100) DEFAULT NULL,
+  address VARCHAR(100) DEFAULT NULL,
+  zipcode VARCHAR(20) DEFAULT NULL,
+  website VARCHAR(200) DEFAULT NULL,
+  contact_telephone VARCHAR(50) DEFAULT NULL,
+  confidence_level FLOAT(3,2) DEFAULT NULL,  
+  item_category VARCHAR(100) DEFAULT NULL,
+  place_type VARCHAR(50) DEFAULT NULL,
+  transaction_description VARCHAR(200) DEFAULT NULL,
+  is_security_risk VARCHAR(10) DEFAULT NULL,
+  match_status VARCHAR(50) DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS plaid_category_matches (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  plaid_sub_category_id BIGINT(11) DEFAULT NULL,
+  _clout_sub_category_id BIGINT(11) DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS store_match_patterns (
+  id BIGINT(11) NOT NULL AUTO_INCREMENT,
+  command varchar(100) DEFAULT NULL,
+  name_pattern varchar(100) DEFAULT NULL,
+  address_pattern varchar(100) DEFAULT NULL,
+  city_pattern varchar(100) DEFAULT NULL,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+      	

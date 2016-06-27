@@ -1,4 +1,4 @@
-package com.clout.cron.batch.mapper;
+package com.api.cron.batch.mapper;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.clout.cron.batch.model.TransactionsRaw;
+import com.api.cron.batch.model.TransactionsRaw;
 
 public class TransactionsRawMapper implements RowMapper<TransactionsRaw> {
 

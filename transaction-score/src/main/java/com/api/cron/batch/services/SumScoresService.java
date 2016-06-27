@@ -1,4 +1,4 @@
-package com.clout.cron.batch.services;
+package com.api.cron.batch.services;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clout.cron.batch.util.DateFormatUtil;
+import com.api.cron.batch.util.DateFormatUtil;
 import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;

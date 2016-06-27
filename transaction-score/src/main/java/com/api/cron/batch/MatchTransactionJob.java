@@ -1,4 +1,4 @@
-package com.clout.cron.batch;
+package com.api.cron.batch;
 
 import java.io.FileInputStream;
 import java.sql.Date;
@@ -18,11 +18,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 
-import com.clout.cron.batch.jobitems.JobState;
-import com.clout.cron.batch.mapper.TransactionScoreJobsMapper;
-import com.clout.cron.batch.model.TransactionScoreJobs;
-import com.clout.cron.batch.services.StoreMatchPatternServiceInterface;
-import com.clout.cron.specialcase.IdService;
+import com.api.cron.batch.jobitems.JobState;
+import com.api.cron.batch.mapper.TransactionScoreJobsMapper;
+import com.api.cron.batch.model.TransactionScoreJobs;
+import com.api.cron.batch.services.StoreMatchPatternServiceInterface;
+import com.api.cron.specialcase.IdService;
 
 public class MatchTransactionJob implements BatchJob {
 	private final static Logger logger = Logger.getLogger(MatchTransactionJob.class);
@@ -56,7 +56,7 @@ public class MatchTransactionJob implements BatchJob {
 			JdbcTemplate readStoreJdbcTemplate = (JdbcTemplate) context.getBean("readStoreJdbcTemplate");
 			
 			Properties props = new Properties();
-			props.load(new FileInputStream("/opt/cloutjobs/match/transaction_match.properties"));
+			props.load(new FileInputStream("/opt/match/transaction_match.properties"));
 			
 			String selectMaxTransactionScoreJobsIdQuery = props.getProperty("cron.job.select.max.job.id");
 			String transactionScoreJobsQuery = props.getProperty("cron.job.select.transaction.score.jobs");			

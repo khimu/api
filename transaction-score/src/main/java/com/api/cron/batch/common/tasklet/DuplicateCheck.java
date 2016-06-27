@@ -1,8 +1,8 @@
-package com.clout.cron.batch.common.tasklet;
+package com.api.cron.batch.common.tasklet;
 
 import org.springframework.stereotype.Component;
 
-import com.clout.cron.batch.jobitems.JobState;
+import com.api.cron.batch.jobitems.JobState;
 
 @Component("duplicateCheck")
 public class DuplicateCheck {

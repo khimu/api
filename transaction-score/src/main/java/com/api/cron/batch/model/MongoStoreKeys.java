@@ -1,4 +1,4 @@
-package com.clout.cron.batch.model;
+package com.api.cron.batch.model;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 

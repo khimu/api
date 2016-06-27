@@ -1,4 +1,4 @@
-package com.clout.cron.batch.jobs.score;
+package com.api.cron.batch.jobs.score;
 
 import javax.annotation.Resource;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clout.cron.batch.model.Transactions;
+import com.api.cron.batch.model.Transactions;
 
 @Component("scoreItemReader")
 @Scope("step")

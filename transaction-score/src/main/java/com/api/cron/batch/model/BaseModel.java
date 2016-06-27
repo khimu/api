@@ -1,4 +1,4 @@
-package com.clout.cron.batch.model;
+package com.api.cron.batch.model;
 
 import java.io.Serializable;
 

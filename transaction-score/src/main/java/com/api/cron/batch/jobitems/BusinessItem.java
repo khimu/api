@@ -1,9 +1,9 @@
-package com.clout.cron.batch.jobitems;
+package com.api.cron.batch.jobitems;
 
-import com.clout.cron.batch.model.Store;
-import com.clout.cron.batch.model.TransactionSubCategories;
-import com.clout.cron.batch.model.Transactions;
-import com.clout.cron.batch.model.TransactionsRaw;
+import com.api.cron.batch.model.Store;
+import com.api.cron.batch.model.TransactionSubCategories;
+import com.api.cron.batch.model.Transactions;
+import com.api.cron.batch.model.TransactionsRaw;
 
 public class BusinessItem extends BaseItem {
 

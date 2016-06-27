@@ -1,4 +1,4 @@
-package com.clout.cron.batch.jobs.score;
+package com.api.cron.batch.jobs.score;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,10 +15,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clout.cron.batch.jobitems.BaseItem;
-import com.clout.cron.batch.jobitems.JobState;
-import com.clout.cron.batch.jobitems.ScoreItem;
-import com.clout.cron.batch.model.Transactions;
+import com.api.cron.batch.jobitems.BaseItem;
+import com.api.cron.batch.jobitems.JobState;
+import com.api.cron.batch.jobitems.ScoreItem;
+import com.api.cron.batch.model.Transactions;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BulkWriteOperation;
 import com.mongodb.BulkWriteResult;

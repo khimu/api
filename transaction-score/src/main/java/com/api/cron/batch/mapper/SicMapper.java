@@ -1,11 +1,11 @@
-package com.clout.cron.batch.mapper;
+package com.api.cron.batch.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.clout.cron.batch.model.Sics;
+import com.api.cron.batch.model.Sics;
 
 public class SicMapper implements RowMapper<Sics>  {
 
