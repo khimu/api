@@ -1,0 +1,33 @@
+package com.dummy.batch.listeners;
+
+import org.apache.log4j.Logger;
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+/**
+ * 
+ * @author Ung
+ *
+ */
+@Component("cronStepListener")
+@Scope("step")
+public class CronStepListener implements StepExecutionListener {
+	private final static Logger logger = Logger.getLogger(CronStepListener.class);
+
+	
+	@Override
+	public void beforeStep(StepExecution stepExecution) {
+		logger.debug("StepExecutionListener - beforeStep");
+	}
+
+	@Override
+	public ExitStatus afterStep(StepExecution stepExecution) {
+		logger.debug("StepExecutionListener - afterStep");
+		return ExitStatus.COMPLETED;
+
+	}
+
+}

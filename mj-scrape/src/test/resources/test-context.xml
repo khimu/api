@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-3.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+	
+
+	<context:component-scan base-package="com.dummy.batch"/>
+
+	<!-- Using properties file to replace properties in xml configuration file -->
+	<bean id="jobProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:googleapi.properties" />
+	</bean>
+	
+	
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+	
+
+	<bean id="googleServiceFactory" class="com.dummy.batch.task.GoogleServiceFactory">
+		<constructor-arg>  
+			<map>  
+				<entry key="STATIC_MAP" >
+					<map>  
+						<entry key="1" >
+							<bean class="com.dummy.batch.task.S3ResourceExistTask" ><property name="order" value="1" /></bean>
+						</entry>
+						<entry key="2" >
+								<bean class="com.dummy.batch.task.GoogleDownloadTask" ><property name="order" value="2" /></bean>
+						</entry>
+						<entry key="3" >
+							<bean class="com.dummy.batch.task.S3UploadTask" ><property name="order" value="3" /></bean>
+						</entry>
+					</map>
+				</entry>
+			</map>			
+		</constructor-arg> 		
+	</bean>
+	
+	<bean id="s3Info" class="com.dummy.batch.metadata.S3Info">
+		<property name="bucketName" value="${s3.bucket.name}" />
+		<property name="s3Host" value="${s3.host}"/>
+	</bean>
+
+</beans>

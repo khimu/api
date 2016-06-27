@@ -1,0 +1,7 @@
+googleapi.properties
+.classpath
+.gradle/
+.project
+.settings/
+target
+

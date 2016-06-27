@@ -1,0 +1,41 @@
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+
+	<util:map id="categories" map-class="java.util.HashMap">
+	</util:map>
+
+	<batch:job id="mjScrapperJob">
+		<!-- Decision tasklet to decide what store index to start at -->
+
+		<batch:step id="extractDataStep">
+			<batch:tasklet>
+				<batch:chunk reader="businessDataItemReader" processor="businessDataItemProcessor" reader-transactional-queue="false" processor-transactional="false" writer="businessDataItemWriter"
+					commit-interval="100" skip-limit="200000">
+	    			<!--  Skipping is safe  -->
+	    			<batch:skippable-exception-classes>
+	      				<batch:include class="com.dummy.batch.task.TaskException" />
+	    			</batch:skippable-exception-classes>					
+				</batch:chunk>
+
+				<batch:listeners>
+					<batch:listener ref="cronStepListener" />
+					<batch:listener ref="cronWriteListener" />
+				</batch:listeners>
+
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+</beans>
