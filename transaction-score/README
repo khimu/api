@@ -170,4 +170,12 @@ CREATE TABLE IF NOT EXISTS store_match_patterns (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+
+TODO
+
+Create transactions_raw records and plaid_category (optional), and store_match_patterns (optional) but demonstrates the complexity of the code.
+
+Run cache (optional), match, score, flatten_score.
+
+Flatten score and score are not complete.  It is pending the mongo query which is in the unit test.  
       	
